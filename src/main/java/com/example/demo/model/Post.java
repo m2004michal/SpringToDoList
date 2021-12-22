@@ -25,8 +25,6 @@ public class Post {
     @NotBlank(message = "Post name cannot be empty or Null")
     private String postName;
     @Nullable
-    private String url;
-    @Nullable
     @Lob
     private String description;
     @ManyToOne(fetch = LAZY)
