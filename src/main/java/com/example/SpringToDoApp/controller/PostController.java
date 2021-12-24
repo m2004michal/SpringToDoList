@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
@@ -27,5 +29,10 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long id){
         return status(HttpStatus.OK).body(postService.getPost(id));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<PostResponse>>  getPostsByCurrentUser(){
+        return status(HttpStatus.OK).body(postService.getPostsByCurrentUser());
     }
 }

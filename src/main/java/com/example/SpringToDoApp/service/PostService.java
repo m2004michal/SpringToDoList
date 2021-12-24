@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,5 +34,11 @@ public class PostService {
       Post post = postRepository.findById(id)
               .orElseThrow(() -> new SpringToDoException("No post with id: " + id + " found"));
         return postMapper.mapToDto(post);
+    }
+
+    @Transactional
+    public List<PostResponse> getPostsByCurrentUser() {
+        List<Post> posts= postRepository.findAllByUser(authService.getCurrentUser());
+        return posts.stream().map(postMapper::mapToDto).collect(Collectors.toList());
     }
 }
