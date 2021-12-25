@@ -5,17 +5,12 @@ import com.example.SpringToDoApp.dto.PostRequest;
 import com.example.SpringToDoApp.dto.PostResponse;
 import com.example.SpringToDoApp.model.Post;
 import com.example.SpringToDoApp.model.User;
-import com.example.SpringToDoApp.service.AuthService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Mapper(componentModel = "Spring")
 public abstract class PostMapper {
-
-    @Autowired
-    private AuthService authService;
 
 
     @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
