@@ -35,4 +35,9 @@ public class PostController {
     public ResponseEntity<List<PostResponse>>  getPostsByCurrentUser(){
         return status(HttpStatus.OK).body(postService.getPostsByCurrentUser());
     }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity deletePost(@PathVariable Long id){
+        postService.deletePostById(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

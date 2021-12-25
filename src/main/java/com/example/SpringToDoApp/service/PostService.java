@@ -41,4 +41,13 @@ public class PostService {
         List<Post> posts= postRepository.findAllByUser(authService.getCurrentUser());
         return posts.stream().map(postMapper::mapToDto).collect(Collectors.toList());
     }
+
+    @Transactional
+    public void deletePostById(Long id){
+        Post post = postRepository.findByPostId(id);
+        if(authService.getCurrentUser().equals(post.getUser())) {
+            postRepository.delete(postRepository.findByPostId(id));
+            System.out.println("Post Deleted Successfully");
+        }else throw new SpringToDoException("U cannot delete other users posts");
+    }
 }
