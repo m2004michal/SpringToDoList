@@ -31,23 +31,19 @@ public class PostService {
 
     @Transactional
     public PostResponse getPost(Long id) {
-      Post post = postRepository.findById(id)
-              .orElseThrow(() -> new SpringToDoException("No post with id: " + id + " found"));
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new SpringToDoException("No post with id: " + id + " found"));
         return postMapper.mapToDto(post);
     }
 
     @Transactional
     public List<PostResponse> getPostsByCurrentUser() {
-        List<Post> posts= postRepository.findAllByUser(authService.getCurrentUser());
+        List<Post> posts = postRepository.findAllByUser(authService.getCurrentUser());
         return posts.stream().map(postMapper::mapToDto).collect(Collectors.toList());
     }
 
     @Transactional
-    public void deletePostById(Long id){
-        Post post = postRepository.findByPostId(id);
-        if(authService.getCurrentUser().equals(post.getUser())) {
-            postRepository.delete(postRepository.findByPostId(id));
-            System.out.println("Post Deleted Successfully");
-        }else throw new SpringToDoException("U cannot delete other users posts");
+    public void deletePostById(Long id) {
+        postRepository.deleteById(id);
     }
 }
